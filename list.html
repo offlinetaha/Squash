@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Squash - Tab Optimizer & Dashboard</title>
+  <link rel="stylesheet" href="list.css">
+  <link rel="icon" type="image/png" href="icons/icon-32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-theme="dark">
+  <div class="app-container">
+    
+    <!-- Top Navigation & Header -->
+    <header class="app-header">
+      <div class="header-brand">
+        <div class="logo-wrapper">
+          <img src="icons/icon-48.png" alt="Squash Logo" class="brand-icon">
+          <div class="logo-glow"></div>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title-row">
+            <h1 class="brand-name">Squash</h1>
+            <span class="badge badge-primary">Tab Optimizer</span>
+          </div>
+          <p class="brand-tagline">Reclaim up to 95% of your computer's RAM</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="btn-squash-window" class="btn btn-emerald" title="Squash tabs in current window (Alt+S)">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 8h16M4 16h16M12 3v5M12 21v-5M8 5l4 3 4-3M8 19l4-3 4 3" />
+          </svg>
+          <span>Squash Window</span>
+        </button>
+
+        <button id="btn-new-group" class="btn btn-secondary" title="Create empty group">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+          <span>New Group</span>
+        </button>
+
+        <div class="divider-vertical"></div>
+
+        <button id="btn-export-share" class="btn btn-icon" title="Export & Share">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13" />
+          </svg>
+        </button>
+
+        <button id="btn-import-backup" class="btn btn-icon" title="Import JSON Backup">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+          </svg>
+        </button>
+        <input type="file" id="file-import" accept=".json" style="display: none;">
+
+        <button id="btn-shortcuts" class="btn btn-icon" title="Keyboard Shortcuts">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="M6 8h.001M10 8h.001M14 8h.001M18 8h.001M8 12h.001M12 12h.001M16 12h.001M7 16h10" />
+          </svg>
+        </button>
+
+        <button id="btn-settings" class="btn btn-icon" title="Settings">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+            <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" />
+          </svg>
+        </button>
+
+        <button id="btn-theme-toggle" class="btn btn-icon" title="Toggle Theme">
+          <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5" />
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+          </svg>
+          <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Metrics & Performance Banner -->
+    <section class="metrics-bar">
+      <div class="metric-card">
+        <div class="metric-icon-box emerald">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+          </svg>
+        </div>
+        <div class="metric-content">
+          <span class="metric-label">Estimated RAM Freed</span>
+          <div class="metric-value-row">
+            <span id="stat-ram-saved" class="metric-value">0 MB</span>
+            <span class="metric-sub-badge">~95% Memory Recovered</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon-box indigo">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
+          </svg>
+        </div>
+        <div class="metric-content">
+          <span class="metric-label">Tabs In Storage</span>
+          <div class="metric-value-row">
+            <span id="stat-saved-tabs" class="metric-value">0</span>
+            <span class="metric-sub">active tabs</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon-box violet">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1" />
+            <rect x="14" y="3" width="7" height="7" rx="1" />
+            <rect x="14" y="14" width="7" height="7" rx="1" />
+            <rect x="3" y="14" width="7" height="7" rx="1" />
+          </svg>
+        </div>
+        <div class="metric-content">
+          <span class="metric-label">Tab Groups</span>
+          <div class="metric-value-row">
+            <span id="stat-groups-count" class="metric-value">0</span>
+            <span class="metric-sub">sessions</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon-box amber">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          </svg>
+        </div>
+        <div class="metric-content">
+          <span class="metric-label">All-Time Tabs Collapsed</span>
+          <div class="metric-value-row">
+            <span id="stat-alltime-tabs" class="metric-value">0</span>
+            <span class="metric-sub">total optimizations</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter & Search Controls -->
+    <section class="controls-bar">
+      <div class="search-box">
+        <svg class="icon search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8" />
+          <path d="M21 21l-4.35-4.35" />
+        </svg>
+        <input type="text" id="search-input" placeholder="Search saved tabs by title or URL..." autocomplete="off">
+        <span class="kbd-hint">/</span>
+        <button id="btn-search-clear" class="btn-clear" title="Clear search" style="display: none;">&times;</button>
+      </div>
+
+      <div class="filter-pills">
+        <button class="filter-pill active" data-filter="all">All Groups</button>
+        <button class="filter-pill" data-filter="starred">★ Starred</button>
+        <button class="filter-pill" data-filter="today">Today</button>
+        <button class="filter-pill" data-filter="older">Older</button>
+      </div>
+
+      <div class="group-view-controls">
+        <button id="btn-expand-all" class="btn-text" title="Expand all groups">Expand All</button>
+        <span class="text-muted">•</span>
+        <button id="btn-collapse-all" class="btn-text" title="Collapse all groups">Collapse All</button>
+      </div>
+    </section>
+
+    <!-- Main Content: Groups Container -->
+    <main class="main-content">
+      <!-- Empty State -->
+      <div id="empty-state" class="empty-state" style="display: none;">
+        <div class="empty-illustration">
+          <div class="empty-circle-glow"></div>
+          <svg class="empty-svg" viewBox="0 0 200 200" fill="none">
+            <circle cx="100" cy="100" r="80" stroke="currentColor" stroke-width="2" stroke-dasharray="6 6" opacity="0.2" />
+            <rect x="40" y="55" width="120" height="90" rx="10" stroke="currentColor" stroke-width="2.5" opacity="0.8" />
+            <path d="M40 80h120" stroke="currentColor" stroke-width="2" opacity="0.6" />
+            <circle cx="55" cy="68" r="4" fill="#10B981" />
+            <circle cx="68" cy="68" r="4" fill="#F59E0B" />
+            <circle cx="81" cy="68" r="4" fill="#EF4444" />
+            <!-- Compress icon inside screen -->
+            <path d="M75 105h50M75 125h50M100 95v10M100 135v-10" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" />
+          </svg>
+        </div>
+        <h2 class="empty-title">Your Tab Deck is Clean!</h2>
+        <p class="empty-desc">
+          Click the <strong>Squash</strong> icon in your browser toolbar or press 
+          <kbd class="kbd-key">Alt</kbd> + <kbd class="kbd-key">S</kbd> anytime to collapse open tabs into a clean list and instantly liberate your system memory.
+        </p>
+        <div class="empty-actions">
+          <button id="btn-empty-squash" class="btn btn-emerald btn-large">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 8h16M4 16h16M12 3v5M12 21v-5" />
+            </svg>
+            Squash Current Window Tabs Now
+          </button>
+        </div>
+        <div class="empty-tip">
+          <span class="tip-pill">💡 Pro Tip</span>
+          <span>Pinned tabs and tabs playing audio or video are automatically preserved by default!</span>
+        </div>
+      </div>
+
+      <!-- Tab Groups List -->
+      <div id="groups-container" class="groups-container">
+        <!-- Rendered dynamically by list.js -->
+      </div>
+    </main>
+
+  </div>
+
+  <!-- MODAL: Settings -->
+  <div id="modal-settings" class="modal-overlay" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Squash Preferences</h3>
+        <button class="modal-close" data-close-modal>&times;</button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="setting-row">
+          <div class="setting-info">
+            <label class="setting-label">Ignore Pinned Tabs</label>
+            <span class="setting-desc">Keep your permanently pinned web apps (email, music, chat) open when squashing.</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="setting-ignore-pinned" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <label class="setting-label">Ignore Audio / Video Tabs</label>
+            <span class="setting-desc">Never collapse tabs that are actively playing sound or video streams.</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="setting-ignore-audible" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <label class="setting-label">Remove Tab on Click</label>
+            <span class="setting-desc">Opening an individual link from your list automatically removes it.</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="setting-remove-on-open" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <label class="setting-label">Deduplicate URLs</label>
+            <span class="setting-desc">Automatically eliminate identical URLs within the same collapsed group.</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="setting-deduplicate" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <label class="setting-label">Estimated Memory per Tab</label>
+            <span class="setting-desc">Average RAM consumed by a modern browser tab for metric calculations.</span>
+          </div>
+          <div class="input-unit-wrapper">
+            <input type="number" id="setting-ram-per-tab" min="20" max="300" step="5" value="75" class="input-number">
+            <span class="input-unit">MB</span>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <label class="setting-label">Theme</label>
+            <span class="setting-desc">Choose your preferred dashboard appearance.</span>
+          </div>
+          <select id="setting-theme" class="select-input">
+            <option value="dark">Dark Theme (Default)</option>
+            <option value="light">Light Theme</option>
+            <option value="system">Follow System</option>
+          </select>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-close-modal>Close</button>
+        <button id="btn-save-settings" class="btn btn-emerald">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Export & Share -->
+  <div id="modal-export" class="modal-overlay" style="display: none;">
+    <div class="modal-dialog modal-large">
+      <div class="modal-header">
+        <h3 class="modal-title">Export & Share Tabs</h3>
+        <button class="modal-close" data-close-modal>&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="export-tabs-nav">
+          <button class="export-tab-btn active" data-export-format="markdown">Markdown</button>
+          <button class="export-tab-btn" data-export-format="text">Plain Text</button>
+          <button class="export-tab-btn" data-export-format="html">HTML List</button>
+          <button class="export-tab-btn" data-export-format="json">JSON Backup</button>
+        </div>
+        <div class="export-content-wrapper">
+          <textarea id="export-textarea" class="export-textarea" readonly></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span id="export-copied-indicator" class="copy-success-text" style="display: none;">Copied to clipboard!</span>
+        <button id="btn-download-export" class="btn btn-secondary">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+          </svg>
+          Download File
+        </button>
+        <button id="btn-copy-export" class="btn btn-emerald">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" />
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+          </svg>
+          Copy to Clipboard
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Keyboard Shortcuts -->
+  <div id="modal-shortcuts" class="modal-overlay" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Keyboard Shortcuts</h3>
+        <button class="modal-close" data-close-modal>&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="shortcuts-grid">
+          <div class="shortcut-item">
+            <span class="shortcut-desc">Squash tabs in current window</span>
+            <div class="keys"><kbd>Alt</kbd> + <kbd>S</kbd></div>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-desc">Open Squash dashboard</span>
+            <div class="keys"><kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd></div>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-desc">Focus search bar</span>
+            <div class="keys"><kbd>/</kbd></div>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-desc">Close any modal</span>
+            <div class="keys"><kbd>Esc</kbd></div>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-desc">One-click toolbar trigger</span>
+            <div class="keys"><span>Click Extension Icon</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-close-modal>Got It</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="list.js"></script>
+</body>
+</html>
